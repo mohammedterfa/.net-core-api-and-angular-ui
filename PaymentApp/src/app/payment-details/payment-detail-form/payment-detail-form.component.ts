@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { PaymentDetailService } from 'src/app/shared/payment-detail.service';
 
 @Component({
   selector: 'app-payment-detail-form',
@@ -6,6 +7,11 @@ import { Component } from '@angular/core';
   styles: [
   ]
 })
-export class PaymentDetailFormComponent {
+export class PaymentDetailFormComponent implements OnInit {
+  constructor(public service : PaymentDetailService){
 
+  }
+  ngOnInit(): void {
+    this.service.refreshList();
+  }
 }
