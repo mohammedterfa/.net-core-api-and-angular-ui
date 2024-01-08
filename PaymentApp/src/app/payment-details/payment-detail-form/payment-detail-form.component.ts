@@ -7,11 +7,9 @@ import { PaymentDetailService } from 'src/app/shared/payment-detail.service';
   styles: [
   ]
 })
-export class PaymentDetailFormComponent implements OnInit {
+export class PaymentDetailFormComponent {
   constructor(public service : PaymentDetailService){
 
   }
-  ngOnInit(): void {
-    this.service.refreshList();
-  }
+
 }
