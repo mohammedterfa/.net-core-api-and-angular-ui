@@ -7,6 +7,8 @@ import { PaymentDetailFormComponent } from './payment-details/payment-detail-for
 import { HttpClientModule } from '@angular/common/http';
 import { PaymentDetailService } from './shared/payment-detail.service';
 import { FormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     PaymentDetailService

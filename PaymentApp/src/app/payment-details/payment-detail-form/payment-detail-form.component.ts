@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { PaymentDetail } from 'src/app/shared/payment-detail.model';
 import { PaymentDetailService } from 'src/app/shared/payment-detail.service';
 
 @Component({
@@ -8,8 +11,49 @@ import { PaymentDetailService } from 'src/app/shared/payment-detail.service';
   ]
 })
 export class PaymentDetailFormComponent {
-  constructor(public service : PaymentDetailService){
+  constructor(public service : PaymentDetailService, private toastr: ToastrService){
 
+  }
+
+  onSubmit(form: NgForm){
+    this.service.formSubmitted = true;
+    if(form.valid){
+      if(this.service.formData.paymentDetailId == 0){
+        this.insertRecord(form);
+      }
+      else {
+        this.updateRecord(form);
+      }
+    }
+
+  }
+
+  insertRecord(form: NgForm){
+    this.service.postPaymentDetail()
+    .subscribe({
+      next: res=>{
+        this.service.list = res as PaymentDetail[];
+        this.service.resetForm(form)
+        this.toastr.success('Submitted successfully', 'Payment Detail Register');
+      },
+      error: err=> {
+        console.log(err);
+      }
+    });
+  }
+
+  updateRecord(form: NgForm){
+    this.service.putPaymentDetail()
+    .subscribe({
+      next: res=>{
+        this.service.list = res as PaymentDetail[];
+        this.service.resetForm(form)
+        this.toastr.success('Submitted successfully', 'Payment Detail Register');
+      },
+      error: err=> {
+        console.log(err);
+      }
+    });
   }
 
 }
