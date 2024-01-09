@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PaymentDetailService } from '../shared/payment-detail.service';
 import { PaymentDetail } from '../shared/payment-detail.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-payment-details',
@@ -9,7 +10,7 @@ import { PaymentDetail } from '../shared/payment-detail.model';
   ]
 })
 export class PaymentDetailsComponent implements OnInit {
-  constructor(public service: PaymentDetailService){
+  constructor(public service: PaymentDetailService, private toastr: ToastrService) {
 
   }
 
@@ -17,7 +18,23 @@ export class PaymentDetailsComponent implements OnInit {
     this.service.refreshList();
   }
 
-  populateForm(selectedRecord: PaymentDetail){
-    this.service.formData = Object.assign({},selectedRecord );
+  populateForm(selectedRecord: PaymentDetail) {
+    this.service.formData = Object.assign({}, selectedRecord);
+  }
+
+  onDelete(id: number) {
+    if (confirm('Are you sure to delete this record?')) {
+      this.service.deletePaymentDetail(id)
+        .subscribe({
+          next: res => {
+            this.service.list = res as PaymentDetail[];
+            this.toastr.error('deleted successfully', 'Payment Detail Register');
+          },
+          error: err => {
+            console.log(err);
+          }
+        });
+    }
+
   }
 }
