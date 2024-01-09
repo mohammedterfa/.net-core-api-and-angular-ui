@@ -48,7 +48,7 @@ export class PaymentDetailFormComponent {
       next: res=>{
         this.service.list = res as PaymentDetail[];
         this.service.resetForm(form)
-        this.toastr.success('Submitted successfully', 'Payment Detail Register');
+        this.toastr.info('updated successfully', 'Payment Detail Register');
       },
       error: err=> {
         console.log(err);
